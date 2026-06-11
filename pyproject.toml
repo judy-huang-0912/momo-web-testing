@@ -1,0 +1,17 @@
+[project]
+name = "momo-web-testing"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "playwright>=1.60.0",
+    "pytest>=9.0.3",
+    "pytest-playwright>=0.8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "e2e: end-to-end browser tests",
+]
