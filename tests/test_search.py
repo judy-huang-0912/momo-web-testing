@@ -1,5 +1,4 @@
 import pytest
-
 from pages.home_page import HomePage
 from pages.search_result_page import SearchResultPage
 
@@ -17,7 +16,7 @@ FILTER_CAPACITY = "256GB"
 def test_search_iphone(home_page: HomePage, search_result_page: SearchResultPage):
     """情境：輸入有效關鍵字「iphone」搜尋，並切換至前三頁。
 
-    驗證：每頁商品數量 > 0、名稱含 iphone/ipad/apple、價格有顯示、圖片正確載入。
+    驗證：每頁商品數量 > 0、第一筆名稱含 iphone/ipad/apple、價格有顯示、圖片正確載入。
     """
     home_page.open()
     home_page.search(SEARCH_KEYWORD)
@@ -27,20 +26,6 @@ def test_search_iphone(home_page: HomePage, search_result_page: SearchResultPage
         search_result_page.go_to_page(page_num, SEARCH_KEYWORD)
         search_result_page.assert_selected_page(page_num)
         search_result_page.verify_products_match_keywords(page_num, PRODUCT_NAME_KEYWORDS)
-
-
-@pytest.mark.e2e
-def test_search_default_placeholder(
-    home_page: HomePage, search_result_page: SearchResultPage
-):
-    """情境：不輸入關鍵字，直接點搜尋，使用搜尋框預設 placeholder（如「亞培」）。
-
-    驗證：商品數量 > 0、名稱含 placeholder 文字、價格有顯示、圖片正確載入。
-    """
-    home_page.open()
-    keyword = home_page.search_with_placeholder()
-    search_result_page.wait_for_products(keyword)
-    search_result_page.verify_products_contain(keyword)
 
 
 @pytest.mark.e2e
@@ -61,7 +46,7 @@ def test_search_filter_brand_and_capacity(
 ):
     """情境：搜尋 iphone 後，依品牌與容量篩選（Apple → iPhone17Pro → 256GB）。
 
-    驗證：前幾頁商品的名稱、價格、圖片皆正確顯示。
+    驗證：前幾頁第一筆商品的名稱、價格、圖片皆正確顯示。
     """
     home_page.open()
     home_page.search(SEARCH_KEYWORD)

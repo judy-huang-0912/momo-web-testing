@@ -8,6 +8,7 @@ dependencies = [
     "playwright>=1.60.0",
     "pytest>=9.0.3",
     "pytest-playwright>=0.8.0",
+    "pytest-xdist>=3.6.0",
 ]
 
 [tool.pytest.ini_options]
@@ -16,3 +17,7 @@ pythonpath = ["."]
 markers = [
     "e2e: end-to-end browser tests",
 ]
+# 平行執行：pytest tests/ -v -n auto
+# -n auto   依 CPU 自動分配 worker（E2E 上限 4，見 conftest.py）
+# -n 4      指定 4 個 worker
+# -n 0      關閉平行，改回單程序執行

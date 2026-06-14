@@ -1,9 +1,19 @@
+import os
+
 import pytest
 
 from pages.home_page import HomePage
 from pages.search_result_page import SearchResultPage
 
 pytest_plugins = ["pytest_playwright"]
+
+# E2E 每個 worker 會啟動獨立瀏覽器，限制上限避免記憶體爆掉
+MAX_E2E_WORKERS = 4
+
+
+def pytest_xdist_auto_num_workers(config) -> int:
+    cpu_count = os.cpu_count() or 2
+    return min(cpu_count, MAX_E2E_WORKERS)
 
 
 @pytest.fixture(scope="session")
